@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.helgi";
+option java_outer_classname = "ActivityTracker";
+option objc_class_prefix = "HLW";
+
+import "google/type/latlng.proto";
+import "google/protobuf/timestamp.proto";
+import "google/type/date.proto";
+
+package org.helgi;
+
+service ActivityTrackerService {
+  rpc liveHealthData (stream LiveHealthData) returns (ActivityTrackerReply) {}
+  rpc activityData (ActivityData) returns (ActivityTrackerReply) {}
+}
+
+message ActivityTrackerReply {
+  string message = 1;
+}
+
+message BloodPressure {
+  uint32 systolic = 1;
+  uint32 diastolic = 2;
+}
+
+message Walking {
+  uint32 steps = 1;
+  float distance = 2;
+  uint32 calories = 3;
+}
+
+message PhysicalActivity {
+  uint32 moderate_minutes = 1;
+  uint32 intense_minutes = 2;
+  uint32 calories = 3;
+}
+
+message LiveHealthData {
+  google.protobuf.Timestamp timestamp = 1;
+  google.type.LatLng loc = 2;
+  uint32 heart_rate = 3;
+  BloodPressure blood_pressure = 4;
+  float oxygen_level = 5;
+  Walking walk_data = 11;
+  PhysicalActivity physical_activity = 12;
+}
+
+message Span {
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
+}
+
+message WalkingSpan {
+  Span timeSpan = 1;
+  Walking walking = 2;
+}
+
+message PhysicalActivitySpan {
+  Span timeSpan = 1;
+  PhysicalActivity physical_activity = 2;
+}
+
+message ActivityData {
+  repeated WalkingSpan walk_data = 1;
+  repeated PhysicalActivitySpan physical_activity = 2;
+}

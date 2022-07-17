@@ -1,17 +1,17 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "org.helgi";
+option java_package = "org.helgi.activity.service";
 option java_outer_classname = "ActivityTracker";
-option objc_class_prefix = "HLW";
+option objc_class_prefix = "ATR";
 
 import "google/type/latlng.proto";
 import "google/protobuf/timestamp.proto";
 import "google/type/date.proto";
 
-package org.helgi;
+package org.helgi.activity;
 
-service ActivityTrackerService {
+service ActivityTracker {
   rpc liveHealthData (stream LiveHealthData) returns (ActivityTrackerReply) {}
   rpc activityData (ActivityData) returns (ActivityTrackerReply) {}
 }

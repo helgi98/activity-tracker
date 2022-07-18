@@ -3,6 +3,7 @@ package org.helgi.activity
 import io.grpc.ServerBuilder
 import org.helgi.activity.auth.AuthProvider
 import org.helgi.activity.config.{AppConfig, ServerConfig}
+import org.helgi.activity.repo.KafkaRepo
 import org.helgi.activity.service.ActivityTrackerService
 import org.helgi.activity.service.activity_tracker.ZioActivityTracker.ZActivityTracker
 import pureconfig.ConfigSource
@@ -40,6 +41,7 @@ object TrackerServer extends ZIOAppDefault {
     .provide(config,
       httpClient,
       AuthProvider.live,
+      KafkaRepo.live,
       ActivityTrackerService.live,
       servicesProvider) *> ZIO.never
 }

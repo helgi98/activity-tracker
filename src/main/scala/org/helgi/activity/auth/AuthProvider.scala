@@ -16,7 +16,7 @@ case class AuthProvider(config: AppConfig, backend: SttpBackend[Task, Any]) {
 
   private val tokenKey: Metadata.Key[String] = Metadata.Key.of("token", Metadata.ASCII_STRING_MARSHALLER)
 
-  def authenticate(rc: RequestContext): IO[AuthError, User] = {
+  def authenticate(rc: RequestContext): IO[AuthError, User] =
     for {
       tokenOpt <- rc.metadata.get(tokenKey)
       token <- ZIO.fromOption(tokenOpt).mapError(_ => AuthError("Token not found"))
@@ -29,7 +29,6 @@ case class AuthProvider(config: AppConfig, backend: SttpBackend[Task, Any]) {
       user <- if (!response.isSuccess) ZIO.fail(AuthError(s"Authentication failed with: ${response.statusText}"))
       else ZIO.fromEither(response.body).mapError(_ => AuthError("Failed to parse auth response"))
     } yield user
-  }
 
 }
 

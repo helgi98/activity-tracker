@@ -12,8 +12,8 @@ import "google/type/date.proto";
 package org.helgi.activity;
 
 service ActivityTracker {
-  rpc liveHealthData (stream LiveHealthData) returns (ActivityTrackerReply) {}
-  rpc activityData (ActivityData) returns (ActivityTrackerReply) {}
+  rpc sendLiveData (stream LiveActivityData) returns (ActivityTrackerReply) {}
+  rpc sendAggregatedData (AggregatedActivityData) returns (ActivityTrackerReply) {}
 }
 
 message ActivityTrackerReply {
@@ -37,7 +37,7 @@ message PhysicalActivity {
   uint32 calories = 3;
 }
 
-message LiveHealthData {
+message LiveActivityData {
   google.protobuf.Timestamp timestamp = 1;
   google.type.LatLng loc = 2;
   uint32 heart_rate = 3;
@@ -62,7 +62,7 @@ message PhysicalActivitySpan {
   PhysicalActivity physical_activity = 2;
 }
 
-message ActivityData {
+message AggregatedActivityData {
   repeated WalkingSpan walk_data = 1;
   repeated PhysicalActivitySpan physical_activity = 2;
 }

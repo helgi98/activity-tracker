@@ -1,4 +1,4 @@
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 addSbtPlugin("com.thesamet" % "sbt-protoc" % "1.0.6")
 

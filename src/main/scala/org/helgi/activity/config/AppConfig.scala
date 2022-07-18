@@ -13,4 +13,8 @@ case class ServerConfig(host: String, port: Int)
 
 case class AuthConfig(url: String)
 
-case class AppConfig(server: ServerConfig, db: DbConfig, auth: AuthConfig)
+case class KafkaTopics(liveActivityData: String, aggActivityData: String)
+
+case class KafkaConfig(bootstrapUrls: List[String], topics: KafkaTopics)
+
+case class AppConfig(server: ServerConfig, db: DbConfig, auth: AuthConfig, kafka: KafkaConfig)
